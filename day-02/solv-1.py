@@ -15,7 +15,7 @@ with open(INPUT_FILE_NAME, "r") as input_file:
         # print(f"  {increasing=}")
         safe = True
         for idx, num in enumerate(nums[1:], 1):
-            diff = num - nums[idx-1]
+            diff = num - nums[idx - 1]
             if diff < -3 or diff > 3:
                 # print(f"  more than 3 diff at {idx=} ({diff=})")
                 safe = False
