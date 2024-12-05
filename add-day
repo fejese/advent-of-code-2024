@@ -5,10 +5,9 @@ if [ -n "${1:-}" ]; then
 else
     read -p "day? " day
 fi
+dir=$(printf "day-%02d" "${day#0}")
 
-dir="day-$day"
-
-[ -d "$dir" ] || mkdir "$dir"
+mkdir -p "$dir"
 
 for solv in "$dir"/solv-{1,2}.py; do
     [ -f "$solv" ] && continue
@@ -24,10 +23,15 @@ PY
     chmod +x "$solv"
 done
 
-touch "$dir/input" "$dir/test-input"
 
-echo "Input?"
-cat > "$dir/input"
+for input in $dir/{,test-}input; do
+    if ! [ -f "$input" ] || ( read -p "$input exists, override? [yN] " a && [ "$a" == "y" ] ); then
+        touch "$input"
+        echo "Content for $input? (press ctrl+d at the end)"
+        cat > "$input"
+    else
+        echo "Not overriding $input"
+    fi
+done
 
-echo "Test input?"
-cat > "$dir/test-input"
+bash -c "cd $dir; PS1='AOC \\W \$ '; export PS1; bash"

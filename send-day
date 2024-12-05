@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+if [ -n "${1:-}" ]; then
+    day=$1
+else
+    read -p "day? " day
+fi
+day=${day#0}
+dir=$(printf "day-%02d" "${day}")
+
+black "$dir"/*.py
+
+git add "$dir"
+git commit -m "day $day"
+
+git push origin
+git push gh
