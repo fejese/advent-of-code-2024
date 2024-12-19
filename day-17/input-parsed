@@ -1,0 +1,18 @@
+while True:
+    B = A % 8 # take last 3 bits
+    B = B ^ 1 # flip last bit
+    C = A >> B
+    B = B ^ 5 # 5 = b101 flip these bits
+    B = B ^ C
+    print(B % 8) # print last 3 bits of B
+    A = A // (2^3) # = A // 8 (A>>3)
+    if A == 0:
+        break
+
+
+while True:
+    B = (A % 8) ^ 4 ^ (A >> ((A % 8) ^ 1))
+    print(B % 8) # print last 3 bits of B
+    A = A >> 3
+    if A == 0:
+        break
